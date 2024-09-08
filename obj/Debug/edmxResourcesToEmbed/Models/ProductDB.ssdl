@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ESHOP_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CatName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProId" />
+    </Key>
+    <Property Name="ProId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProImage" Type="nvarchar" MaxLength="100" />
+    <Property Name="ProPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CatId" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ESHOP_DB.dbo.Product_Category' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Product_Category">
+    <Key>
+      <PropertyRef Name="ProId" />
+    </Key>
+    <Property Name="ProId" Type="int" Nullable="false" />
+    <Property Name="ProName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProImage" Type="nvarchar" MaxLength="100" />
+    <Property Name="ProPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CatName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK__Product__CatId__267ABA7A">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CatId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ESHOP_DBModelStoreContainer">
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product_Category" EntityType="Self.Product_Category" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Product_Category].[ProId] AS [ProId], 
+    [Product_Category].[ProName] AS [ProName], 
+    [Product_Category].[ProImage] AS [ProImage], 
+    [Product_Category].[ProPrice] AS [ProPrice], 
+    [Product_Category].[CatName] AS [CatName]
+    FROM [dbo].[Product_Category] AS [Product_Category]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Product__CatId__267ABA7A" Association="Self.FK__Product__CatId__267ABA7A">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

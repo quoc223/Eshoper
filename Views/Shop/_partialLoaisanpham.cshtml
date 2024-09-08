@@ -1,0 +1,25 @@
+﻿
+@model IEnumerable<Eshoper.Models.Category>
+<div class="left-sidebar">
+    <h2>Category</h2>
+    <div class="panel-group category-products" id="accordian">
+        <!--category-productsr-->
+        @foreach (var item in Model)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a  href="@Url.Action("Index","Home", new {id=item.Id})">
+                       @item.CatName
+                           
+                        </a>
+                    </h4>
+                </div>
+            </div>
+        }
+           
+
+    </div><!--/category-products-->
+
+   
+</div>
